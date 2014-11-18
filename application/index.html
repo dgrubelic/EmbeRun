@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Runtastic solution (Ember.js)</title>
+	<meta name="author" content="Davor Grubelic" />
+	<meta name="description" content="Runtastic assignment solution">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+	<script type="text/x-handlebars">
+	<div id="app">
+		<div class="header">
+		<h3>Runtastic app</h3>
+		</div>
+
+		{{outlet}}
+	</div>
+	</script>	
+
+	<script type="text/x-handlebars" data-template-name="session">
+	<table>
+		<thead>
+			<tr>
+				<th>Session ID</th>
+				<th>Start time</th>
+				<th>End time</th>
+				<th>Duration</th>
+				<th>Distance</th>
+				<th>Sport type ID</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each session in sessionList}}
+			<tr {{action 'openSession' session}}>
+				<td>{{#link-to 'session-details' session.id}}{{session.id}}{{/link-to}}</td>
+				<td>{{session.start_time}}</td>
+				<td>{{session.end_time}}</td>
+				<td>{{session.duration}}</td>
+				<td>{{session.distance}}</td>
+				<td>{{session.sport_type_id}}</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+
+	<div class="content">
+		{{pagination-links action="onPageChange"}}
+	</div>
+	</script>
+
+	<script type="text/x-handlebars" data-template-name="session-details">
+	{{id}}
+	</script>
+
+	<script type="text/x-handlebars" id="components/pagination-links">
+	<div class="paging">
+		<ul class="pages">
+			<li {{action 'changePage' 1}}>1</li>
+			<li {{action 'changePage' 2}}>2</li>
+		</ul>
+	</div>
+	</script>
+
+	<script src="components/jquery/dist/jquery.min.js"></script>
+	<script src="components/handlebars/handlebars.min.js"></script>
+	<script src="components/ember/ember.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>

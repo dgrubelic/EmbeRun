@@ -1,0 +1,6 @@
+{
+	"name": "Ember dev",
+	"dependencies": {
+		"ember": "latest"
+	}
+}
