@@ -32,7 +32,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{{#each session in sessionList}}
+			{{#each session in model}}
 			<tr {{action 'openSession' session}}>
 				<td>{{#link-to 'session-details' session.id}}{{session.id}}{{/link-to}}</td>
 				<td>{{session.start_time}}</td>
@@ -46,7 +46,7 @@
 	</table>
 
 	<div class="content">
-		{{pagination-links action="onPageChange"}}
+		{{pagination-links pagination=pagination action="onPageChange"}}
 	</div>
 	</script>
 
@@ -57,8 +57,9 @@
 	<script type="text/x-handlebars" id="components/pagination-links">
 	<div class="paging">
 		<ul class="pages">
-			<li {{action 'changePage' 1}}>1</li>
-			<li {{action 'changePage' 2}}>2</li>
+			{{#each page in pages}}
+				<li {{action 'changePage' page}}>{{page}}</li>
+			{{/each}}
 		</ul>
 	</div>
 	</script>
@@ -66,6 +67,7 @@
 	<script src="components/jquery/dist/jquery.min.js"></script>
 	<script src="components/handlebars/handlebars.min.js"></script>
 	<script src="components/ember/ember.js"></script>
+	<script src="components/ember-data/ember-data.js"></script>
 	<script src="app.js"></script>
 </body>
 </html>

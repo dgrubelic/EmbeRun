@@ -1,6 +1,8 @@
 {
-	"name": "Ember dev",
-	"dependencies": {
-		"ember": "latest"
-	}
+  "name": "Ember dev",
+  "dependencies": {
+    "ember": "1.8.1",
+    "ember-data": "1.0.0-beta.11",
+    "handlebars": "1.1"
+  }
 }
