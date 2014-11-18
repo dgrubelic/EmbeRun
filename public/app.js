@@ -86,9 +86,8 @@
 		host: 'https://intense-bastion-3210.herokuapp.com',
 
 		pathForType: function(type) {
-			// return Ember.String.underscore(type + 's') + '.json';
 			var decamelized = Ember.String.decamelize(type);
-			return Ember.String.pluralize(decamelized) + '.json';
+			return Ember.String.pluralize(decamelized);
 		}
 	});
 
@@ -167,7 +166,8 @@
 
 	app.SessionDetailsRoute = Ember.Route.extend({
 		model: function (params) {
-			return Ember.$.getJSON('//intense-bastion-3210.herokuapp.com/run_sessions/' + params.session_id + '.json');
+			// return Ember.$.getJSON('//intense-bastion-3210.herokuapp.com/run_sessions/' + params.session_id + '.json');
+			return this.store.find('run_session', params.session_id);
 		}
 	});
 
