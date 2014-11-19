@@ -4,12 +4,17 @@
 	var app = Ember.Application.create();
 
 	app.Router.map(function () {
-		this.route('index', { path: '/' });
 		this.route('session', { path: '/session', queryParams: ['page'] });
 		this.route('session-details', { path: '/session/:session_id' });
 	});
 
 	// Routes
+	app.ApplicationRoute = Ember.Route.extend({
+		beforeModel: function () {
+			this.transitionToRoute('session');
+		}
+	});
+
 	app.IndexRoute = Ember.Route.extend({
 		beforeModel: function() {
 			this.transitionToRoute('session');
