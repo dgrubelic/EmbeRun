@@ -9,15 +9,9 @@
 	});
 
 	// Routes
-	app.ApplicationRoute = Ember.Route.extend({
-		beforeModel: function () {
-			this.transitionToRoute('session');
-		}
-	});
-
 	app.IndexRoute = Ember.Route.extend({
-		beforeModel: function() {
-			this.transitionToRoute('session');
+		redirect: function() {
+			this.transitionTo('session');
 		}
 	});
 
