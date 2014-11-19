@@ -23,11 +23,11 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Session ID</th>
-				<th>Start time</th>
-				<th>End time</th>
-				<th>Duration</th>
-				<th>Distance</th>
+				<th><a {{action 'onSortChange' 'id'}}>Session ID</a></th>
+				<th><a {{action 'onSortChange' 'start_time'}}>Start time</a></th>
+				<th><a {{action 'onSortChange' 'end_time'}}>End time</a></th>
+				<th><a {{action 'onSortChange' 'duration'}}>Duration</a></th>
+				<th><a {{action 'onSortChange' 'distance'}}>Distance</a></th>
 				<th>Sport type ID</th>
 			</tr>
 		</thead>
@@ -51,11 +51,13 @@
 	</script>
 
 	<script type="text/x-handlebars" data-template-name="session-details">
-	<div>Sesssion: {{id}}</div>
-	<div>Start time: {{start_time}}</div>
-	<div>End time: {{end_time}}</div>
-	<div>Duration: {{duration}}</div>
-	<div>Distance: {{distance}}</div>
+	<div class="content">
+		<div>Sesssion: {{id}}</div>
+		<div>Start time: {{start_time}}</div>
+		<div>End time: {{end_time}}</div>
+		<div>Duration: {{duration}}</div>
+		<div>Distance: {{distance}}</div>
+	</div>
 	</script>
 
 	<script type="text/x-handlebars" id="components/pagination-links">

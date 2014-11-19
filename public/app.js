@@ -21,9 +21,9 @@
 	});
 
 	app.PaginationLinksComponent = Ember.Component.extend({
-		pagination: null,
-		maxPages: 10,
-		pages: [],
+		pagination: 	null,
+		maxPages: 		10,
+		pages: 			[],
 
 		calculatePages: function () {
 			var maxPages = this.get('maxPages'),
@@ -113,25 +113,16 @@
 			if (params.order)
 				paging.order = params.order;
 
-			return this.store.find('run_session', paging).then(function (sessions) {
-				var meta = that.store.metadataFor('run_session');
-
-				that.set('paging.total', meta.total);
-				that.set('paging.available_pages', meta.available_pages);
-
-				return sessions;
-			});
+			return this.store.find('run_session', paging);
 		},
 
 		actions: {
 			onPageChange: function (page) {
 				this.set('paging.page', page);
-				// this.refresh();
 			},
 
 			onSortChange: function (sortBy) {
 				this.set('paging.sort_by', sortBy);
-				// this.refresh();
 			}
 		}
 	});
@@ -147,7 +138,7 @@
 		calculatePages: function () {
 			var meta = this.store.metadataFor('run_session');
 			this.set('pagination', meta.pagination);
-		}.observes('page').on('init'),
+		}.observes('model').on('init'),
 
 		actions: {
 			openSession: function (session) {
@@ -159,6 +150,16 @@
 			},
 
 			onSortChange: function (sortBy) {
+				if (sortBy === this.get('sort_by')) {
+					if (this.get('order') === 'desc') {
+						this.set('order', 'asc');
+					} else {
+						this.set('order', 'desc');
+					}
+				} else {
+					this.set('order', 'desc');
+				}
+
 				this.set('sort_by', sortBy);
 			}
 		}
