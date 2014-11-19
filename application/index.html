@@ -33,14 +33,14 @@
 		</thead>
 		<tbody>
 			{{#each session in model}}
-			<tr {{action 'openSession' session}}>
-				<td>{{#link-to 'session-details' session.id}}{{session.id}}{{/link-to}}</td>
-				<td>{{formatDate session.start_time}}</td>
-				<td>{{formatDate session.end_time}}</td>
-				<td>{{formatDuration session.duration}}</td>
-				<td>{{formatDistance session.distance}}</td>
-				<td>{{session.sport_type_id}}</td>
-			</tr>
+				<tr {{action 'openSession' session}}>
+					<td>{{#link-to 'session-details' session.id}}{{session.id}}{{/link-to}}</td>
+					<td>{{formatDate session.start_time}}</td>
+					<td>{{formatDate session.end_time}}</td>
+					<td>{{formatDuration session.duration}}</td>
+					<td>{{formatDistance session.distance}}</td>
+					<td>{{session.sport_type_id}}</td>
+				</tr>
 			{{/each}}
 		</tbody>
 	</table>
