@@ -3,6 +3,11 @@
 
 	var app = Ember.Application.create();
 
+	app.Router.map(function () {
+		this.route('session', { path: '/session', queryParams: ['page'] });
+		this.route('session-details', { path: '/session/:session_id' });
+	});
+
 	// Routes
 	app.IndexRoute = Ember.Route.extend({
 		beforeModel: function() {
@@ -86,11 +91,6 @@
 				}
 			}
 		}
-	});
-
-	app.Router.map(function () {
-		this.route('session', { path: '/session', queryParams: ['page'] });
-		this.route('session-details', { path: '/session/:session_id' });
 	});
 
 	app.RunSession = DS.Model.extend({
