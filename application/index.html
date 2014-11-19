@@ -35,10 +35,10 @@
 			{{#each session in model}}
 			<tr {{action 'openSession' session}}>
 				<td>{{#link-to 'session-details' session.id}}{{session.id}}{{/link-to}}</td>
-				<td>{{session.start_time}}</td>
-				<td>{{session.end_time}}</td>
-				<td>{{session.duration}}</td>
-				<td>{{session.distance}}</td>
+				<td>{{formatDate session.start_time}}</td>
+				<td>{{formatDate session.end_time}}</td>
+				<td>{{formatDuration session.duration}}</td>
+				<td>{{formatDistance session.distance}}</td>
 				<td>{{session.sport_type_id}}</td>
 			</tr>
 			{{/each}}
@@ -53,10 +53,10 @@
 	<script type="text/x-handlebars" data-template-name="session-details">
 	<div class="content">
 		<div>Sesssion: {{id}}</div>
-		<div>Start time: {{start_time}}</div>
-		<div>End time: {{end_time}}</div>
-		<div>Duration: {{duration}}</div>
-		<div>Distance: {{distance}}</div>
+		<div>Start time: {{formatDate start_time}}</div>
+		<div>End time: {{formatDate end_time}}</div>
+		<div>Duration: {{formatDuration duration}}</div>
+		<div>Distance: {{formatDistance distance}}</div>
 	</div>
 	</script>
 
@@ -65,7 +65,11 @@
 		<ul class="pages">
 			<li {{action 'previousPage'}}>Previous</li>
 			{{#each page in pages}}
-				<li {{action 'changePage' page}}>{{page}}</li>
+				{{#if page.isCurrent}}
+					<li class="current">{{page.value}}</li>
+				{{else}}
+					<li {{action 'changePage' page.value}}>{{page.value}}</li>
+				{{/if}}
 			{{/each}}
 			<li {{action 'nextPage'}}>Next</li>
 		</ul>
@@ -73,9 +77,10 @@
 	</script>
 
 	<script src="components/jquery/dist/jquery.min.js"></script>
-	<script src="components/handlebars/handlebars.min.js"></script>
+	<script src="components/handlebars/handlebars.js"></script>
 	<script src="components/ember/ember.js"></script>
 	<script src="components/ember-data/ember-data.js"></script>
+	<script src="components/moment/min/moment.min.js"></script>
 	<script src="app.js"></script>
 </body>
 </html>

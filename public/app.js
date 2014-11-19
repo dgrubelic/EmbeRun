@@ -35,32 +35,39 @@
 				availablePages = this.get('pagination.available_pages'),
 				currentPage = parseInt(this.get('pagination.page'), 10);
 
+			var getPage = function (page) {
+				return {
+					value: page,
+					isCurrent: (currentPage === page)
+				};
+			}
+
 			var pages = [];
 
-			if (currentPage >= (availablePages - maxPages - 2)) {
-				pages.push(1);
-				pages.push(2);
+			if (currentPage > (availablePages - (maxPages - 2))) {
+				pages.push(getPage(1));
+				pages.push(getPage(2));
 
-				for (var i = (availablePages - maxPages - 2); i <= availablePages; i++) {
-					pages.push(i);
+				for (var i = (availablePages - (maxPages - 2)); i <= availablePages; i++) {
+					pages.push(getPage(i));
 				}
 			} else if (currentPage < (maxPages - 2)) {
 				for (var i = 1; i <= (maxPages - 2); i++) {
-					pages.push(i);
+					pages.push(getPage(i));
 				}
 
-				pages.push(availablePages - 1);
-				pages.push(availablePages);
+				pages.push(getPage(availablePages - 1));
+				pages.push(getPage(availablePages));
 			} else {
-				pages.push(1);
-				pages.push(2);
+				pages.push(getPage(1));
+				pages.push(getPage(2));
 
 				for (var i = (currentPage - 2); i <= (currentPage + 2); i++) {
-					pages.push(i);
+					pages.push(getPage(i));
 				}
 
-				pages.push(availablePages - 1);
-				pages.push(availablePages);
+				pages.push(getPage(availablePages - 1));
+				pages.push(getPage(availablePages));
 			}
 
 			this.set('pages', pages);
@@ -91,6 +98,93 @@
 				}
 			}
 		}
+	});
+
+	Ember.Handlebars.helper('formatDate', function(date, options) {  
+		var format = 'DD.MM.YYYY HH:mm:ss';
+
+		if (options.hash.format) {
+			format = options.hash.format;
+		}
+
+		return new Ember.Handlebars.SafeString(moment(date).format(format));
+	});
+
+	Ember.Handlebars.helper('formatDuration', function (totalSeconds, options) {
+		totalSeconds = parseInt(totalSeconds, 10);
+		totalSeconds = totalSeconds / 1000;
+
+		var seconds = 0,
+			minutes = 0,
+			hours 	= 0;
+
+		function parseHours(hr) {
+			if ((hr - 3600) >= 0) {
+				hours += 1;
+				return parseHours(hr - 3600);
+			} else {
+				return hr;
+			}
+		}
+
+		var secondsLeft = parseHours(totalSeconds);
+
+		secondsLeft = (function parseMinutes(min) {
+			if ((min - 60) >= 0) {
+				minutes += 1;
+				return parseMinutes(min - 60);
+			} else {
+				return min;
+			}
+		}(secondsLeft));
+
+		seconds = secondsLeft;
+		
+		var output = '';
+		if (hours >= 1) {
+			output += (hours + 'h ');
+		}
+
+		if (minutes >= 1) {
+			output += (minutes + 'm ');
+		}
+
+		if (seconds >= 1) {
+			output += (Math.ceil(seconds) + 's');
+		}
+
+		return new Ember.Handlebars.SafeString(output);
+	});
+
+	Ember.Handlebars.helper('formatDistance', function (distance, options) {
+		distance = parseInt(distance, 10);
+
+		var kilometers 	= 0,
+			meters 		= 0;
+
+		function parseKilometers(mtr) {
+			if ((mtr - 1000) >= 0) {
+				kilometers += 1;
+				return parseKilometers(mtr - 1000);
+			} else {
+				return mtr;
+			}
+		}
+
+		meters = parseKilometers(distance);
+
+		var output = '';
+		if (kilometers >= 1) {
+			output += (kilometers + 'km ');
+		}
+
+		if (meters >= 1) {
+			output += (meters + 'm ');
+		}
+
+		return output;
+
+		return new Ember.Handlebars.SafeString(output);
 	});
 
 	app.RunSession = DS.Model.extend({
