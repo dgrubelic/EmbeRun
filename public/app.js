@@ -59,11 +59,31 @@
 			}
 
 			this.set('pages', pages);
+			this.set('currentPage', currentPage);
 		}.observes('pagination').on('init'),
 
 		actions: {
 			changePage: function (page) {
 				this.sendAction('action', page);
+			},
+
+			previousPage: function () {
+				var currentPage = parseInt(this.get('pagination.page'), 10);
+
+				var previousPage = currentPage - 1;
+				if (previousPage > 0) {
+					this.sendAction('action', previousPage);
+				}
+			},
+
+			nextPage: function () {
+				var currentPage = parseInt(this.get('pagination.page'), 10),
+					availablePages = parseInt(this.get('pagination.available_pages'), 10);
+
+				var nextPage = currentPage + 1;
+				if (nextPage <= availablePages) {
+					this.sendAction('action', nextPage);
+				}
 			}
 		}
 	});

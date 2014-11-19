@@ -63,9 +63,11 @@
 	<script type="text/x-handlebars" id="components/pagination-links">
 	<div class="paging">
 		<ul class="pages">
+			<li {{action 'previousPage'}}>Previous</li>
 			{{#each page in pages}}
 				<li {{action 'changePage' page}}>{{page}}</li>
 			{{/each}}
+			<li {{action 'nextPage'}}>Next</li>
 		</ul>
 	</div>
 	</script>
